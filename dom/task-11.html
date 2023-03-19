@@ -1,0 +1,16 @@
+<script type="text/javascript">
+    var myObj={
+        name:"saumay",
+        age:21
+     
+    
+    };
+
+     myObj_serialized=JSON.stringify(myObj)
+     
+      
+     localStorage.setItem('myObj',myObj_serialized);
+
+     var myObj_deserializesd=JSON.parse(localStorage.getItem('myObj'));
+     console.log(myObj)
+    </script>
