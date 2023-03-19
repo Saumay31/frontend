@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>task-12 DOM sharpener</title>
+    </head>
+    <body>
+        <form onsubmit="storage(event)">
+            <label >Name:</label>
+            <input type="text"  name="same">
+            <label >Email:</label>
+            <input type="text"  name="above">
+            <label >Telephone:</label>
+            <input type="text"  name="after">
+           <input type="submit" >
+           <ul id="listOfItems"></ul>
+            <script>
+                function storage(event){
+                    event.preventDefault();
+                    const name=event.target.same.value;
+                    const email=event.target.above.value;
+                    const number=event.target.after.value;
+                    localStorage.setItem('name',name);
+                    localStorage.setItem('email',email);
+                    localStorage.setItem('number',number);
+                 var obj={
+                    name,
+                    email,
+                    number
+                 }
+                 localStorage.setItem(obj.email,JSON.stringify(obj));
+                 showUserOnScreen(obj)
+                 
+                }
+                function showUserOnScreen(obj){
+                   var parentElem=document.getElementById("listOfItems");
+                   var childElem=document.createElement('li')
+                   childElem.textContent = obj.name + '-'+ obj.email  + '-'+ obj.number
+                   
+                   var deleteBtn=document.createElement('input')
+                   deleteBtn.type='button'
+                   deleteBtn.value='delete'
+                   deleteBtn.onclick = () =>{
+                    localStorage.removeItem(obj.email);
+                    parentElem.removeChild(childElem)
+                   }
+                   childElem.appendChild(deleteBtn)
+                   parentElem.appendChild(childElem)
+
+                }
+            </script>
+        </form>
+    </body>
+</html>
