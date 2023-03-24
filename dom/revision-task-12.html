@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <form  id= "my-form" onsubmit="storage(event)">
+        <label for="name">Name</label>
+        <input type="text" id="name">
+        <label for="email">email</label>
+        <input type="text" id="email">
+        <label for="phone">phone</label>
+        <input type="text" id="phone">
+        <input type="submit">
+        </form>
+        <ul id="list-of-item"></ul>
+        <script >
+          function storage(event){
+            event.preventDefault();
+            var name=document.getElementById('name').value;
+            var email=document.getElementById('email').value;
+            var phone=document.getElementById('phone').value;
+         var obj ={
+            name,
+            email,
+            phone,
+         };  
+         var obj_serialized=JSON.stringify(obj);
+         localStorage.setItem(obj.email,obj_serialized);
+         showUserOnScreen(obj);
+        }
+        function showUserOnScreen(obj){
+            var parentElem = document.getElementById('list-of-item');
+            
+            var childElem=document.createElement('li');
+            
+            childElem.textContent=obj.name+'-'+obj.email+'-'+obj.phone;
+            
+            var deleteBtn=document.createElement('input');
+            deleteBtn.type='button'
+            deleteBtn.value='delete';
+            deleteBtn.className='delete-details'
+            
+            // Add an event listener to the delete button
+            deleteBtn.onclick=()=> {
+            // Remove the item from localStorage
+            localStorage.removeItem(obj.email);
+            // Remove the item from the screen
+            parentElem.removeChild(childElem);
+        };
+            
+            
+            var editBtn=document.createElement('input');
+            editBtn.type='button'
+            editBtn.value='edit';
+            editBtn.className='edit-details';
+
+            editBtn.onclick = () => {
+                localStorage.removeItem(obj.email);
+                parentElem.removeChild(childElem)
+                document.getElementById('name').value=obj.name;
+                document.getElementById('email').value=obj.email;
+                document.getElementById('phone').value=obj.phone;
+            }
+            
+            childElem.appendChild(deleteBtn);
+            childElem.appendChild(editBtn)
+            parentElem.appendChild(childElem)
+
+        }
+        </script>
+    </body>
+</html>
